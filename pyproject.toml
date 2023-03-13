@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "tencentcloud-django-cos-storage"
+version = "0.1"
+description = "A django app for Tencent Cloud Object Storage. 腾讯云对象存储（COS）服务 for Django。"
+license = "BSD-3-Clause"
+authors = ["huberyxxiao <huberyxxiao@tencent.com>"]
+readme = "README.md"
+repository = "https://github.com/Tencent-Cloud-Plugins/tencentcloud-django-plugin-cos"
+keywords = ["django"]
+packages = [
+    { include = "django_cos_storage" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.7,<4.0"
+cos-python-sdk-v5 = "^1.9.4"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+pytest-django = "^4.3.0"
+pytest-cov = "^2.12.0"
+flake8 = "^3.9.2"
+black = "^21.6b0"
+
+[tool.coverage.run]
+include = ["django_cos_storage/*"]
+omit = ["*tests*"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+DJANGO_SETTINGS_MODULE = "tests.django_settings"
+python_files = "tests.py test_*.py"
+addopts = "--cov=django_cos_storage"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
