@@ -6,11 +6,10 @@ from django.utils._os import safe_join
 from django.utils.deconstruct import deconstructible
 from qcloud_cos import CosConfig, CosS3Client
 from qcloud_cos.cos_exception import CosServiceError
+import pkg_resources
 
 from .file import TencentCOSFile
 
-
-VERSION = "0.1"
 
 @deconstructible
 class TencentCOSStorage(Storage):
@@ -34,8 +33,9 @@ class TencentCOSStorage(Storage):
         self.upload_max_thread = setting.get("UPLOAD_MAX_THREAD", None)
 
         config_kwargs = config or setting.get("CONFIG", {})
-
-        config_kwargs["UA"] = "tencentcloud-django-cos-storage-" + "-" + VERSION
+        package_name = "cos-python-sdk-v5"  # 替换为您要查询的包的名称
+        version = pkg_resources.get_distribution(package_name).version
+        config_kwargs["UA"] = "tencentcloud-django-plugin-cos/0.0.1;cos-python-sdk-v5/" + version
         required = ["Region", "SecretId", "SecretKey"]
         for key in required:
             if key not in config_kwargs:
